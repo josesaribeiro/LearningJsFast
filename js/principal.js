@@ -1,17 +1,15 @@
-// alert('Check the console.');
-console.log('Using my log');
-// console.log(document);
-
 // Personal Title
 var title = document.querySelector('.personal-title');
-var oldTitle = title.textContent;
 var userName = 'Paulo'; // prompt('What is your name?');
 title.textContent = 'Welcome ' + userName;
-console.log('Your old title was "' + oldTitle + '" and now is "' + title.textContent + '"');
 
 // calculatin imd 
+function calculateImc(weight, hight) {
+  var imc = weight / (hight * hight);
+  return imc.toFixed(2);
+}
+
 function calculatingImc() {
-  console.log('vim do click');
   var weightIsOk = true;
   var weightMax = 400;
   var weightMin = 0;
@@ -34,8 +32,8 @@ function calculatingImc() {
     hightIsOk = (hight > hightMin && hight < hightMax);
 
     if (weightIsOk && hightIsOk) {
-      imcResult = (weight / (hight * hight));
-      imc.textContent = imcResult.toFixed(2);
+      imcResult = calculateImc(weight, hight);
+      imc.textContent = imcResult;
     } else if (!weightIsOk) {
       imc.textContent = ('Weight is not valid. Lesser than ' + weightMin + ' or higher than ' + weightMax);
       patient.classList.add('invalid-patient');
@@ -46,3 +44,4 @@ function calculatingImc() {
   }
 }
 calculatingImc();
+

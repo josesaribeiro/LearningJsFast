@@ -1,7 +1,7 @@
 var buttonAdd = document.querySelector('#adicionar-paciente');
 
 function formValueOk(Name, Weight, Hight, Fat) {
-  return Name != '' && Weight != '' && Hight != '' && Fat != '';
+  return Name !== '' && Weight !== '' && Hight !== '' && Fat !== '';
 }
 function addNewPatient(Name, Weight, Hight, Fat) {
   var table = document.querySelector('#tabela-pacientes');
@@ -17,7 +17,7 @@ function addNewPatient(Name, Weight, Hight, Fat) {
   WeightTd.textContent = Weight;
   HightTd.textContent = Hight;
   FatTd.textContent = Fat;
-  ImcTd.textContent = 0;
+  ImcTd.textContent = calculateImc(Weight, Hight);
 
   newPatientTr.appendChild(NameTd);
   newPatientTr.appendChild(WeightTd);
@@ -30,10 +30,9 @@ function addNewPatient(Name, Weight, Hight, Fat) {
 
 function createNewPatient() {
   var form = document.querySelector('#form-adiciona');
-  var newName = form.nome.value;
-  var newWeight = form.peso.value;
-  var newHight = form.altura.value;
-  var newFat = form.gordura.value;
+
+  //var nova
+  var patient = newPatientData(form);
 
   function cleanFormValues() {
     form.nome.value = '';
@@ -44,13 +43,22 @@ function createNewPatient() {
 
   if (formValueOk(newName, newWeight, newHight, newFat)) {
     addNewPatient(newName, newWeight, newHight, newFat);
-    calculatingImc();
     cleanFormValues();
   } else {
     alert('Há valeres não preenchidos no formulário');
   }
 }
-buttonAdd.addEventListener('click', function (event) {
+buttonAdd.addEventListener('click', function createNewPatients(event) {
   event.preventDefault();
   createNewPatient();
 });
+
+function newPatientData(form) {
+  var patient = {
+    name: form.nome.value;
+    weight: form.peso.value;
+    hight: form.altura.value;
+    fat: form.gordura.value;
+    imc: calculateImc(form.peso.value, form.altura.value);
+  }
+}
