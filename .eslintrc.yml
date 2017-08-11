@@ -1,0 +1,15 @@
+extends: airbnb-base/legacy
+plugins:
+  - import
+rules:
+  vars-on-top: off
+globals:
+  process: on
+  describe: on
+  before: on
+  beforeEach: on
+  after: on
+  afterEach: on
+  suite: on
+  test: on
+  it: on
