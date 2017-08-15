@@ -1,9 +1,20 @@
 var buttonAdd = document.querySelector('#adicionar-paciente');
 
-function formValueOk(Name, Weight, Hight, Fat) {
-  return Name !== '' && Weight !== '' && Hight !== '' && Fat !== '';
+function formValueOk(patient) {
+  debugger;
+  var result = true;
+  var objectkeys = Object.keys(patient);
+
+  for (var i = 0; i < objectkeys.length; i += 1) {
+    var element = objectkeys[i];
+    if (!patient[element]) {
+      result = false;
+    }
+    return result;
+  }
 }
-function addNewPatient(Name, Weight, Hight, Fat) {
+
+function addNewPatient(patient) {
   var table = document.querySelector('#tabela-pacientes');
   var newPatientTr = document.createElement('tr');
 
@@ -13,11 +24,11 @@ function addNewPatient(Name, Weight, Hight, Fat) {
   var FatTd = document.createElement('td');
   var ImcTd = document.createElement('td');
 
-  NameTd.textContent = Name;
-  WeightTd.textContent = Weight;
-  HightTd.textContent = Hight;
-  FatTd.textContent = Fat;
-  ImcTd.textContent = calculateImc(Weight, Hight);
+  NameTd.textContent = patient.name;
+  WeightTd.textContent = patient.weight;
+  HightTd.textContent = patient.hight;
+  FatTd.textContent = patient.fat;
+  ImcTd.textContent = calculateImc(patient.weight, patient.hight);
 
   newPatientTr.appendChild(NameTd);
   newPatientTr.appendChild(WeightTd);
@@ -31,7 +42,7 @@ function addNewPatient(Name, Weight, Hight, Fat) {
 function createNewPatient() {
   var form = document.querySelector('#form-adiciona');
 
-  //var nova
+  // var nova
   var patient = newPatientData(form);
 
   function cleanFormValues() {
@@ -41,8 +52,8 @@ function createNewPatient() {
     form.gordura.value = '';
   }
 
-  if (formValueOk(newName, newWeight, newHight, newFat)) {
-    addNewPatient(newName, newWeight, newHight, newFat);
+  if (formValueOk(patient)) {
+    addNewPatient(patient);
     cleanFormValues();
   } else {
     alert('Há valeres não preenchidos no formulário');
@@ -55,10 +66,11 @@ buttonAdd.addEventListener('click', function createNewPatients(event) {
 
 function newPatientData(form) {
   var patient = {
-    name: form.nome.value;
-    weight: form.peso.value;
-    hight: form.altura.value;
-    fat: form.gordura.value;
-    imc: calculateImc(form.peso.value, form.altura.value);
-  }
+    name: form.nome.value,
+    weight: form.peso.value,
+    hight: form.altura.value,
+    fat: form.gordura.value,
+    imc: calculateImc(form.peso.value, form.altura.value)
+  };
+  return patient;
 }
