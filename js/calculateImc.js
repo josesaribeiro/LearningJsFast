@@ -1,9 +1,3 @@
-// Personal Title
-var title = document.querySelector('.personal-title');
-var userName = 'Paulo'; // prompt('What is your name?');
-title.textContent = 'Welcome ' + userName;
-
-// calculatin imd 
 function calculateImc(weight, hight) {
   var imc = weight / (hight * hight);
   return imc.toFixed(2);
@@ -43,4 +37,3 @@ function calculateOldImc() {
   }
 }
 calculateOldImc();
-
