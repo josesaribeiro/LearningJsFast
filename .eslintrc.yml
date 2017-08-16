@@ -5,6 +5,7 @@ rules:
   vars-on-top: off
   no-undef: off
   no-param-reassign: ["error", { "props": false }]
+  no-underscore-dangle: off
 globals:
   process: on
   describe: on

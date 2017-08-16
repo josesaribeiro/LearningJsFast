@@ -1,8 +1,13 @@
 var buttonAdd = document.querySelector('#adicionar-paciente');
 var newPatient = window.newPatient;
+var calculateImc = window.calculateImc;
 
 function formValueOk(form) {
-  return form.nome.value !== '' && form.peso.value !== '' && form.altura.value !== '' && form.gordura.value !== '';
+  var weightIsOk = calculateImc.validateWeight(weight);
+  var hightIsOk = calculateImc.validateHight(hight);
+  var formNotNull = form.nome.value !== '' && form.peso.value !== '' && form.altura.value !== '' && form.gordura.value !== '';
+
+  return weightIsOk && hightIsOk && formNotNull;
 }
 
 function newPatientData(form) {
@@ -11,16 +16,9 @@ function newPatientData(form) {
     weight: form.peso.value,
     hight: form.altura.value,
     fat: form.gordura.value,
-    imc: calculateImc(form.peso.value, form.altura.value)
+    imc: calculateImc.calculateImc(form.peso.value, form.altura.value)
   };
   return patient;
-}
-
-function cleanFormValues(form) {
-  form.nome.value = '';
-  form.peso.value = '';
-  form.altura.value = '';
-  form.gordura.value = '';
 }
 
 buttonAdd.addEventListener('click', function createNewPatients(event) {
@@ -29,20 +27,19 @@ buttonAdd.addEventListener('click', function createNewPatients(event) {
   var form = document.querySelector('#form-adiciona');
 
   if (formValueOk(form)) {
-    var newPatientForm = newPatientData(form);
-    newPatient.createNewPatient(newPatientForm);
-    cleanFormValues(form);
+    newPatient.createNewPatient(newPatientData(form));
+    form.reset();
   } else {
-    alert('Há valeres não preenchidos no formulário');
+    alert('Há valeres preenchidos incorretamento ou não preenchidos no formulário');
   }
 });
 
 // function objectValidator(patient) {
 //   var result = true;
-//   var objectkeys = Object.keys(patient);
+//   var objectKeys = Object.keys(patient);
 
-//   for (var i = 0; i < objectkeys.length; i += 1) {
-//     var element = objectkeys[i];
+//   for (var i = 0; i < objectKeys.length; i += 1) {
+//     var element = objectKeys[i];
 //     if (!patient[element]) {
 //       result = false;
 //     }

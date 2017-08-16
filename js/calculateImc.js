@@ -1,39 +1,66 @@
-function calculateImc(weight, hight) {
-  var imc = weight / (hight * hight);
-  return imc.toFixed(2);
-}
+window.calculateImc = (function calculateImc() {
+  var patientWeight = {
+    max: 400,
+    min: 0
+  };
 
-function calculateOldImc() {
-  var weightIsOk = true;
-  var weightMax = 400;
-  var weightMin = 0;
-  var hightIsOk = true;
-  var hightMax = 3.00;
-  var hightMin = 0;
-  var eWeightInvalid = ('Weight is not valid. Lesser than ' + weightMin + ' or higher than ' + weightMax)
-  var eHightInvalid = ('Hight is not valid. Lesser than ' + hightMin + ' or higher than ' + hightMax)
+  var patientHight = {
+    max: 3.00,
+    min: 0
+  };
 
+  var errors = {
+    weight: ('Weight is not valid. Lesser than ' + patientWeight.min + ' or higher than ' + patientWeight.max),
+    hight: ('Hight is not valid. Lesser than ' + patientHight.min + ' or higher than ' + patientHight.max)
+  };
 
-  var patients = document.querySelectorAll('.paciente');
+  function calculateImc(weight, hight) {
+    var imc = weight / (hight * hight);
+    return imc.toFixed(2);
+  }
 
-  for (var i = 0; i < patients.length; i += 1) {
-    var patient = patients[i];
+  function validateWeight(weight) {
+    return weight > patientWeight.min && weight < patientWeight.max;
+  }
 
-    var imc = patient.querySelector('.info-imc');
+  function validateHight(hight) {
+    return hight > patientHight.min && hight < patientHight.max;
+  }
 
-    var weight = patient.querySelector('.info-peso').textContent;
-    var hight = patient.querySelector('.info-altura').textContent;
+  function calculateOldImc() {
+    var patients = document.querySelectorAll('.paciente');
 
-    weightIsOk = (weight > weightMin && weight < weightMax);
-    hightIsOk = (hight > hightMin && hight < hightMax);
+    for (var i = 0; i < patients.length; i += 1) {
+      var patient = patients[i];
 
-    if (weightIsOk && hightIsOk) {
-      imc.textContent = calculateImc(weight, hight);
-    } else {
-      if (!weightIsOk) imc.textContent = eWeightInvalid;
-      if (!hightIsOk) imc.textContent += eHightInvalid;
-      patient.classList.add('invalid-patient');
+      var imc = patient.querySelector('.info-imc');
+      var weight = patient.querySelector('.info-peso').textContent;
+      var hight = patient.querySelector('.info-altura').textContent;
+
+      var weightIsOk = validateWeight(weight);
+      var hightIsOk = validateHight(hight);
+
+      if (weightIsOk && hightIsOk) {
+        imc.textContent = calculateImc(weight, hight);
+      } else {
+        if (!weightIsOk) {
+          imc.textContent = errors.weight;
+        }
+
+        if (!hightIsOk) {
+          imc.textContent = errors.hight;
+        }
+
+        if (!weightIsOk && !hightIsOk) {
+          imc.textContent = (errors.weight + '. ' + errors.hight);
+        }
+        patient.classList.add('invalid-patient');
+      }
     }
   }
-}
-calculateOldImc();
+  return {
+    validateWeight: validateWeight(),
+    validateHight: validateHight(),
+    calculateOldImc: calculateOldImc()
+  };
+}());

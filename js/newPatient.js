@@ -1,34 +1,31 @@
 window.newPatient = (function newPatient() {
-  function createNewTr(patient) {
+  function _createNewTd(data, tdClass) {
+    var patientTd = document.createElement('td');
+    patientTd.textContent = data;
+    patientTd.classList.add(tdClass);
+
+    return patientTd;
+  }
+
+  function _createNewTr(patient) {
     var newPatientTr = document.createElement('tr');
+    newPatientTr.classList.add('paciente');
 
-    var NameTd = document.createElement('td');
-    var WeightTd = document.createElement('td');
-    var HightTd = document.createElement('td');
-    var FatTd = document.createElement('td');
-    var ImcTd = document.createElement('td');
+    newPatientTr.appendChild(_createNewTd(patient.name, 'info-nome'));
+    newPatientTr.appendChild(_createNewTd(patient.weight, 'info-peso'));
+    newPatientTr.appendChild(_createNewTd(patient.hight, 'info-altura'));
+    newPatientTr.appendChild(_createNewTd(patient.fat, 'info-gordura'));
+    newPatientTr.appendChild(_createNewTd(patient.imc, 'info-imc'));
 
-    NameTd.textContent = patient.name;
-    WeightTd.textContent = patient.weight;
-    HightTd.textContent = patient.hight;
-    FatTd.textContent = patient.fat;
-    ImcTd.textContent = patient.imc;
-
-    newPatientTr.appendChild(NameTd);
-    newPatientTr.appendChild(WeightTd);
-    newPatientTr.appendChild(HightTd);
-    newPatientTr.appendChild(FatTd);
-    newPatientTr.appendChild(ImcTd);
     return newPatientTr;
   }
 
   function createNewPatient(patient) {
     var table = document.querySelector('#tabela-pacientes');
-    var newPatientTr = createNewTr(patient);
+    var newPatientTr = _createNewTr(patient);
     table.appendChild(newPatientTr);
   }
   return {
-    createNewTr: createNewTr,
     createNewPatient: createNewPatient
   };
 }());
