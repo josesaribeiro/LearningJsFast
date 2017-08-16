@@ -3,6 +3,8 @@ plugins:
   - import
 rules:
   vars-on-top: off
+  no-undef: off
+  no-param-reassign: ["error", { "props": false }]
 globals:
   process: on
   describe: on

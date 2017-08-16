@@ -9,14 +9,13 @@ function calculateImc(weight, hight) {
   return imc.toFixed(2);
 }
 
-function calculatingImc() {
+function calculateOldImc() {
   var weightIsOk = true;
   var weightMax = 400;
   var weightMin = 0;
   var hightIsOk = true;
   var hightMax = 3.00;
   var hightMin = 0;
-  var imcResult = 0;
   var eWeightInvalid = ('Weight is not valid. Lesser than ' + weightMin + ' or higher than ' + weightMax)
   var eHightInvalid = ('Hight is not valid. Lesser than ' + hightMin + ' or higher than ' + hightMax)
 
@@ -37,11 +36,11 @@ function calculatingImc() {
     if (weightIsOk && hightIsOk) {
       imc.textContent = calculateImc(weight, hight);
     } else {
-      if (!weightIsOk) { imc.textContent = eWeightInvalid; }
-      if (!hightIsOk) { imc.textContent += eHightInvalid; }
+      if (!weightIsOk) imc.textContent = eWeightInvalid;
+      if (!hightIsOk) imc.textContent += eHightInvalid;
       patient.classList.add('invalid-patient');
     }
   }
 }
-calculatingImc();
+calculateOldImc();
 
