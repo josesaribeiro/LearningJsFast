@@ -3,8 +3,8 @@ var newPatient = window.newPatient;
 var calculateImc = window.calculateImc;
 
 function formValueOk(form) {
-  var weightIsOk = calculateImc.validateWeight(weight);
-  var hightIsOk = calculateImc.validateHight(hight);
+  var weightIsOk = calculateImc.validateWeight(form.peso.value);
+  var hightIsOk = calculateImc.validateHight(form.altura.value);
   var formNotNull = form.nome.value !== '' && form.peso.value !== '' && form.altura.value !== '' && form.gordura.value !== '';
 
   return weightIsOk && hightIsOk && formNotNull;
@@ -16,7 +16,7 @@ function newPatientData(form) {
     weight: form.peso.value,
     hight: form.altura.value,
     fat: form.gordura.value,
-    imc: calculateImc.calculateImc(form.peso.value, form.altura.value)
+    imc: calculateImc.imcFormula(form.peso.value, form.altura.value)
   };
   return patient;
 }

@@ -14,17 +14,28 @@ window.calculateImc = (function calculateImc() {
     hight: ('Hight is not valid. Lesser than ' + patientHight.min + ' or higher than ' + patientHight.max)
   };
 
-  function calculateImc(weight, hight) {
+  function imcFormula(weight, hight) {
     var imc = weight / (hight * hight);
     return imc.toFixed(2);
   }
 
   function validateWeight(weight) {
-    return weight > patientWeight.min && weight < patientWeight.max;
+    var showError = document.querySelector('#menssageErrorWeight');
+    var weightOk = weight > patientWeight.min && weight < patientWeight.max;
+    if (!weightOk) {
+      showError.textContent = errors.weight;
+    }
+    return weightOk;
   }
 
   function validateHight(hight) {
-    return hight > patientHight.min && hight < patientHight.max;
+    var showError = document.querySelector('#messageErrorHight');
+    var hightOk = hight > patientHight.min && hight < patientHight.max;
+    if (!hightOk) {
+      showError.textContent = errors.hight;
+    }
+
+    return hightOk;
   }
 
   function calculateOldImc() {
@@ -41,7 +52,7 @@ window.calculateImc = (function calculateImc() {
       var hightIsOk = validateHight(hight);
 
       if (weightIsOk && hightIsOk) {
-        imc.textContent = calculateImc(weight, hight);
+        imc.textContent = imcFormula(weight, hight);
       } else {
         if (!weightIsOk) {
           imc.textContent = errors.weight;
@@ -59,8 +70,9 @@ window.calculateImc = (function calculateImc() {
     }
   }
   return {
-    validateWeight: validateWeight(),
-    validateHight: validateHight(),
-    calculateOldImc: calculateOldImc()
+    validateWeight: validateWeight,
+    validateHight: validateHight,
+    calculateOldImc: calculateOldImc,
+    imcFormula: imcFormula
   };
 }());

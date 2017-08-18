@@ -1,3 +1,3 @@
-var calculateOldImc = window.newPatient;
+var calculateOldImc = window.calculateImc;
 
-calculateOldImc.calculateOldImc;
+calculateOldImc.calculateOldImc();
